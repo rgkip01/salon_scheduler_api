@@ -15,11 +15,11 @@ class UsersController{
 
   }
 
-  store(request:Request, response:Response, next:NextFunction){
+  async store(request:Request, response:Response, next:NextFunction){
     const { name, email, password } = request.body
 
     try {
-      const result = this.usersServices.create({ name, email, password })
+      const result = await this.usersServices.create({ name, email, password })
       return response.status(201).json(result);
 
     } catch (error) {
