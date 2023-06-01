@@ -10,5 +10,7 @@ const usersRoutes = new UsersRoutes().getRoutes();
 
 app.use('/users', usersRoutes)
 
+app.use('/users', usersRoutes)
+
 
 app.listen(3000, () => console.log('Server is running in port 3000'));

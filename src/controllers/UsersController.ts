@@ -1,6 +1,5 @@
 import { NextFunction, Request, Response } from "express";
 import { UsersServices } from "../services/UsersServices";
-
 class UsersController{
   private usersServices: UsersServices
 
@@ -13,6 +12,23 @@ class UsersController{
 
   show(){
 
+  }
+
+  async update(request:Request, response:Response, next:NextFunction) {
+    const { name, oldPassword, newPassword } = request.body;
+
+    try {
+      const result = await this.usersServices.update({
+        name, 
+        oldPassword, 
+        newPassword, 
+        avatar_url: request.file
+      });
+      
+      return response.status(200).json(result)
+    } catch (error) {
+      next(error)
+    }
   }
 
   async store(request:Request, response:Response, next:NextFunction){
