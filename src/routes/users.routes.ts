@@ -21,6 +21,9 @@ class UsersRoutes{
       upload.single('avatar_url'), 
       this.usersController.update.bind(this.usersController)
     )
+
+    this.router.post('/auth', this.usersController.auth.bind(this.usersController))
+
     return this.router;
   };
 };
