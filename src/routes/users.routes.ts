@@ -22,7 +22,9 @@ class UsersRoutes{
       this.usersController.update.bind(this.usersController)
     )
 
-    this.router.post('/auth', this.usersController.auth.bind(this.usersController))
+    this.router.post(
+      '/auth', this.usersController.auth.bind(this.usersController)
+    )
 
     return this.router;
   };

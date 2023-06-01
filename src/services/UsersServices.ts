@@ -3,6 +3,7 @@ import { ICreate, IUpdate } from "../interfaces/UsersInterface";
 import { compare, hash } from "bcrypt";
 import { v4 as uuid } from 'uuid';
 import { s3 } from "../config/aws";
+import { sign } from "jsonwebtoken";
 
 class UsersServices {
   private usersRepository: UsersRepository
@@ -52,6 +53,23 @@ class UsersServices {
       throw new Error("User or Password invalid");
     }
 
+    let secretKey:string | undefined = process.env.API_SECRET_KEY
+    if(!secretKey){
+      throw new Error("There is not tokenKey");
+    }
+
+    const token = sign({email}, secretKey, {
+      subject: findUser.id,
+      expiresIn: 60 * 30,
+    })
+
+    return {
+      token, 
+      user: {
+        name: findUser.name,
+        email: findUser.email
+      },
+    }
   }
 }
 
