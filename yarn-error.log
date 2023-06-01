@@ -1,5 +1,5 @@
 Arguments: 
-  /home/rafaelabreu/.nvm/versions/node/v18.16.0/bin/node /home/rafaelabreu/sessao_de_estudos/reactjs_and_nodejs/beauty_salon_scheduler/api/.yarn/releases/yarn-1.22.19.cjs add aws-sdk
+  /home/rafaelabreu/.nvm/versions/node/v18.16.0/bin/node /home/rafaelabreu/sessao_de_estudos/reactjs_and_nodejs/beauty_salon_scheduler/salon_scheduler_api/.yarn/releases/yarn-1.22.19.cjs add aws-sdk
 
 PATH: 
   /home/rafaelabreu/.nvm/versions/node/v18.16.0/bin:/home/rafaelabreu/.local/share/pnpm:/home/rafaelabreu/.local/share/pnpm:/home/rafaelabreu/.rvm/gems/ruby-3.0.0/bin:/home/rafaelabreu/.rvm/gems/ruby-3.0.0@global/bin:/home/rafaelabreu/.rvm/rubies/ruby-3.0.0/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/home/rafaelabreu/.rvm/bin:/usr/local/go/bin:/usr/local/go/bin:/binalias:/home/rafaelabreu/.yarn/bin
@@ -14,11 +14,11 @@ Platform:
   linux x64
 
 Trace: 
-  Error: EACCES: permission denied, mkdir '/home/rafaelabreu/sessao_de_estudos/reactjs_and_nodejs/beauty_salon_scheduler/api/node_modules/are-we-there-yet/node_modules'
+  Error: EACCES: permission denied, mkdir '/home/rafaelabreu/sessao_de_estudos/reactjs_and_nodejs/beauty_salon_scheduler/salon_scheduler_api/node_modules/are-we-there-yet/node_modules'
 
 npm manifest: 
   {
-    "name": "api",
+    "name": "salon_scheduler_api",
     "version": "1.0.0",
     "description": "",
     "main": "index.js",
