@@ -19,6 +19,19 @@ class UsersRepository {
       }
     })
   }
+
+  async update(name: string, newPassword: string, avatar_url: string) {
+    return await prisma.users.update({
+      where: {
+        // ... provide filter here
+      },
+      data: {
+        name,
+        password: newPassword,
+        avatar_url,
+      }
+    })
+  }
 }
 
 export { UsersRepository };
