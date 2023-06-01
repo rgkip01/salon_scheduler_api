@@ -1,6 +1,6 @@
 import { UsersRepository } from "../repositories/UsersRepository";
 import { ICreate, IUpdate } from "../interfaces/UsersInterface";
-import { hash } from "bcrypt";
+import { compare, hash } from "bcrypt";
 import { v4 as uuid } from 'uuid';
 import { s3 } from "../config/aws";
 
@@ -37,6 +37,21 @@ class UsersServices {
     }).promise()
 
     console.log('URL_IMAGE', uploadS3.Location);
+  }
+  
+  async auth(email: string, password: string) {
+    const findUser = await this.usersRepository.findUserByEmail(email);
+    
+    if(!findUser) {
+      throw new Error("User or Password invalid");
+    }
+
+    const passwordMatch = compare(password, findUser.password);
+
+    if(!passwordMatch) {
+      throw new Error("User or Password invalid");
+    }
+
   }
 }
 
