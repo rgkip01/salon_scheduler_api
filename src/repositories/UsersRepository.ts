@@ -20,15 +20,40 @@ class UsersRepository {
     })
   }
 
-  async update(name: string, newPassword: string, avatar_url: string) {
+  async findUserById(id: string) {
+    return await prisma.users.findUnique({
+      where: {
+        id,
+      }
+    })
+  }
+
+  async update(
+    name: string,
+    avatar_url: string,
+    user_id: string
+  ) {
     return await prisma.users.update({
       where: {
-        // ... provide filter here
+        id: user_id
       },
       data: {
         name,
-        password: newPassword,
         avatar_url,
+      }
+    })
+  }
+
+  async updateWithNewPassword(
+    newPassword: string,
+    user_id: string
+  ) {
+    return await prisma.users.update({
+      where: {
+        id: user_id
+      },
+      data: {
+        password: newPassword,
       }
     })
   }

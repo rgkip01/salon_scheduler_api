@@ -24,8 +24,12 @@ class AuthMiddleware {
     try {
       const { sub } = verify(token, secretKey) as IPayload;
       request.user_id = sub;
+      return next()
     } catch (error) {
-      next(error)
+      return response.status(401).json({
+        code: 'token.expired',
+        message: 'token expired',
+      })
     }
   }
 }

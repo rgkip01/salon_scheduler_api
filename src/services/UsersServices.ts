@@ -27,17 +27,39 @@ class UsersServices {
     })
   }
 
-  async update({name, oldPassword, newPassword, avatar_url }: IUpdate){
-    const uploadImage = avatar_url?.buffer;
-    
-    const uploadS3 = await s3.upload({
-      Bucket: 'scheduler-ts-api',
-      Key: `${uuid()}-${ avatar_url?.originalname}`, 
-      ACL: 'public-read',
-      Body: uploadImage
-    }).promise()
+  async update({name, oldPassword, newPassword, avatar_url, user_id }: IUpdate){
+    let pwd;
+    const findUserById = await this.usersRepository.findUserById(user_id);
 
-    console.log('URL_IMAGE', uploadS3.Location);
+    if(!findUserById) {
+      throw new Error("User not found");
+    }
+
+    if(oldPassword && newPassword) {
+      const passwordMatch = compare(oldPassword, findUserById.password);
+      
+      if(!passwordMatch) {
+        throw new Error("Password invalid");
+      }
+      pwd = await hash(newPassword, 10);
+      await this.usersRepository.updateWithNewPassword(pwd, user_id);
+    }
+
+    if(avatar_url){
+      const uploadImage = avatar_url?.buffer;
+    
+      const uploadS3 = await s3.upload({
+        Bucket: 'scheduler-ts-api',
+        Key: `${uuid()}-${ avatar_url?.originalname}`, 
+        ACL: 'public-read',
+        Body: uploadImage
+      }).promise()
+
+      await this.usersRepository.update(name, uploadS3.Location, user_id);
+    }
+    return {
+      message: 'User updated successfully'
+    };
   }
   
   async auth(email: string, password: string) {

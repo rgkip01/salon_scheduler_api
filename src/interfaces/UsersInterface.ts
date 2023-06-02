@@ -4,10 +4,11 @@ interface ICreate {
   password: string;
 }
 interface IUpdate {
-  name: string, 
-  oldPassword: string,
-  newPassword: string
-  avatar_url?: FileUpload
+  name: string; 
+  oldPassword: string;
+  newPassword: string;
+  avatar_url?: FileUpload;
+  user_id: string;
 }
 
 interface FileUpload {
