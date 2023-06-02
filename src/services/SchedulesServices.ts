@@ -24,6 +24,10 @@ class SchedulersServices {
 
     return await this.schedulesRepository.create({name, phone, date: hourStarted })
   }
+
+  async searchAllByDate(date: Date) {
+    return await this.schedulesRepository.findAll(date)
+  }
 }
 
 export { SchedulersServices };
