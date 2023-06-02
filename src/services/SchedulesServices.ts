@@ -1,6 +1,6 @@
 import { ICreate } from "../interfaces/SchedulesInterface";
 import { SchedulesRepository } from "../repositories/SchedulesRepository";
-
+import { isBefore, startOfHour } from 'date-fns';
 class SchedulersServices {
   private schedulesRepository: SchedulesRepository
 
@@ -8,8 +8,21 @@ class SchedulersServices {
     this.schedulesRepository = new SchedulesRepository;
   }
 
-  create({ name, phone, date }: ICreate){
-    console.log("FUI INTERCEPTADO=>", name, phone, date)
+  async create({ name, phone, date }: ICreate){
+    const formatDate = new Date(date)
+    const hourStarted = startOfHour(formatDate)
+
+    if (isBefore(hourStarted, new Date())) {
+      throw new Error("It is not allowed to schedule old date");
+    }
+
+    const checkIsAvailable = await this.schedulesRepository.findByDate(hourStarted);
+
+    if(checkIsAvailable) {
+      throw new Error("Schedule date is not available"); 
+    }
+
+    return await this.schedulesRepository.create({name, phone, date: hourStarted })
   }
 }
 

@@ -11,6 +11,7 @@ class SchedulesController {
     const { name, phone, date } = request.body;
     try {
       const result = await this.schedulesServices.create({name, phone, date });
+      
       return response.status(201).json(result)
     } catch (error) {
       next(error)
