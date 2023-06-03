@@ -28,6 +28,23 @@ class SchedulersServices {
   async searchAllByDate(date: Date) {
     return await this.schedulesRepository.findAll(date)
   }
+
+  async update(id: string, date: Date){
+    const formatDate = new Date(date)
+    const hourStarted = startOfHour(formatDate)
+
+    if (isBefore(hourStarted, new Date())) {
+      throw new Error("It is not allowed to schedule old date");
+    }
+
+    const checkIsAvailable = await this.schedulesRepository.findByDate(hourStarted);
+
+    if(checkIsAvailable) {
+      throw new Error("Schedule date is not available"); 
+    }
+
+    return await this.schedulesRepository.update(id, hourStarted)
+  }
 }
 
-export { SchedulersServices };
+export { SchedulersServices }; 

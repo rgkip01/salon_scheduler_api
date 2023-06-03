@@ -1,6 +1,6 @@
 import { NextFunction, Request, Response } from "express";
 import { SchedulersServices } from "../services/SchedulesServices";
-import { parse, parseISO } from "date-fns";
+import { parseISO } from "date-fns";
 
 class SchedulesController {
   private schedulesServices: SchedulersServices;
@@ -35,7 +35,14 @@ class SchedulesController {
 
   async update(request: Request, response: Response, next: NextFunction){
     try {
-      
+      const { id } = request.params;
+      const { date } = request.body;
+
+      const result = await this.schedulesServices.update(id, date)
+      return response.status(200).json({
+        message: 'Schedule updated successfully',
+        data: result
+      })    
     } catch (error) {
       next(error)
     }

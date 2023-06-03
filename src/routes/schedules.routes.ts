@@ -24,6 +24,12 @@ class SchedulesRouter{
       this.authMiddleware.auth.bind(this.authMiddleware),
       this.schedulesController.index.bind(this.schedulesController)
     );
+
+    this.router.put(
+      '/:id',
+      this.authMiddleware.auth.bind(this.authMiddleware),
+      this.schedulesController.update.bind(this.schedulesController)
+    );
     return this.router;
   }
 }
