@@ -13,6 +13,14 @@ class SchedulesRepository {
     })
   }
 
+  async findById(id: string) {
+    return await prisma.schedule.findFirst({
+      where: {
+        id,
+      }
+    })
+  }
+
   async findByDate(date: Date){
     return await prisma.schedule.findFirst({
       where: { date }
@@ -42,6 +50,14 @@ class SchedulesRepository {
         date,
       }
     });
+  }
+
+  async destroy(id: string) {
+    return await prisma.schedule.delete({
+      where: {
+        id,
+      }
+    })
   }
 }
 

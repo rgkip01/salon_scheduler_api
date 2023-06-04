@@ -13,22 +13,28 @@ class SchedulesRouter{
   }
 
   getRouter(){
+    this.router.get(
+      '/',
+      this.authMiddleware.auth.bind(this.authMiddleware),
+      this.schedulesController.index.bind(this.schedulesController)
+    );
+    
     this.router.post(
       '/',
       this.authMiddleware.auth.bind(this.authMiddleware),
       this.schedulesController.store.bind(this.schedulesController)
     );
 
-    this.router.get(
-      '/',
-      this.authMiddleware.auth.bind(this.authMiddleware),
-      this.schedulesController.index.bind(this.schedulesController)
-    );
-
     this.router.put(
       '/:id',
       this.authMiddleware.auth.bind(this.authMiddleware),
       this.schedulesController.update.bind(this.schedulesController)
+    );
+
+    this.router.delete(
+      '/:id',
+      this.authMiddleware.auth.bind(this.authMiddleware),
+      this.schedulesController.destroy.bind(this.schedulesController)
     );
     return this.router;
   }

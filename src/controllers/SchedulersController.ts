@@ -50,7 +50,15 @@ class SchedulesController {
 
   async destroy(request: Request, response: Response, next: NextFunction){
     try {
+      const { id } = request.params
+      const scheduleFound = await this.schedulesServices.findById(id);
       
+      if (scheduleFound) {
+        await this.schedulesServices.destroy(scheduleFound.id)
+        return response.status(200).json({
+          message: 'Schedule deleted with successfully',
+        })
+      }
     } catch (error) {
       next(error)
     }

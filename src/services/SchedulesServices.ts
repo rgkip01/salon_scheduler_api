@@ -45,6 +45,19 @@ class SchedulersServices {
 
     return await this.schedulesRepository.update(id, hourStarted)
   }
+
+  async findById(id: string) {
+    const findById = await this.schedulesRepository.findById(id);
+
+    if(!findById){
+      throw new Error("Schedule not found");
+    }
+    return findById
+  }
+
+  async destroy(id: string) {
+    return await this.schedulesRepository.destroy(id)
+  }
 }
 
 export { SchedulersServices }; 
