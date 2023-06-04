@@ -24,21 +24,23 @@ class SchedulesController {
 
   async store(request: Request, response: Response, next: NextFunction){
     const { name, phone, date } = request.body;
+    const { user_id } =  request;
     try {
-      const result = await this.schedulesServices.create({name, phone, date });
+      const result = await this.schedulesServices.create({name, phone, date, user_id });
       
       return response.status(201).json(result)
     } catch (error) {
       next(error)
-    }
+    } 
   }
 
   async update(request: Request, response: Response, next: NextFunction){
     try {
       const { id } = request.params;
       const { date } = request.body;
+      const { user_id } = request;
 
-      const result = await this.schedulesServices.update(id, date)
+      const result = await this.schedulesServices.update(id, date, user_id)
       return response.status(200).json({
         message: 'Schedule updated successfully',
         data: result
