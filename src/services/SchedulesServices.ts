@@ -8,7 +8,7 @@ class SchedulersServices {
     this.schedulesRepository = new SchedulesRepository;
   }
 
-  async create({ name, phone, date }: ICreate){
+  async create({ name, phone, date, user_id }: ICreate){
     const formatDate = new Date(date)
     const hourStarted = startOfHour(formatDate)
 
@@ -16,20 +16,20 @@ class SchedulersServices {
       throw new Error("It is not allowed to schedule old date");
     }
 
-    const checkIsAvailable = await this.schedulesRepository.findByDate(hourStarted);
+    const checkIsAvailable = await this.schedulesRepository.findByDate(hourStarted, user_id);
 
     if(checkIsAvailable) {
       throw new Error("Schedule date is not available"); 
     }
 
-    return await this.schedulesRepository.create({name, phone, date: hourStarted })
+    return await this.schedulesRepository.create({name, phone, date: hourStarted, user_id })
   }
 
   async searchAllByDate(date: Date) {
     return await this.schedulesRepository.findAll(date)
   }
 
-  async update(id: string, date: Date){
+  async update(id: string, date: Date, user_id: string){
     const formatDate = new Date(date)
     const hourStarted = startOfHour(formatDate)
 
@@ -37,7 +37,7 @@ class SchedulersServices {
       throw new Error("It is not allowed to schedule old date");
     }
 
-    const checkIsAvailable = await this.schedulesRepository.findByDate(hourStarted);
+    const checkIsAvailable = await this.schedulesRepository.findByDate(hourStarted, user_id);
 
     if(checkIsAvailable) {
       throw new Error("Schedule date is not available"); 
