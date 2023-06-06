@@ -43,7 +43,6 @@ class SchedulesController {
       const result = await this.schedulesServices.update(id, date, user_id)
       return response.status(200).json({
         message: 'Schedule updated successfully',
-        data: result
       })    
     } catch (error) {
       next(error)
